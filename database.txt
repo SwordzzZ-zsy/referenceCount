@@ -1,0 +1,36 @@
+-- auto-generated definition
+create table employee
+(
+    empId     bigint auto_increment comment 'id'
+        primary key,
+    name      varchar(255) not null comment '姓名',
+    quality   double       not null comment '质量指标',
+    quality_p double       not null comment '质量指标权重',
+    submit    double       not null comment '交付质量',
+    submit_p  double       not null comment '交付质量权重',
+    num       double       not null comment '工作量',
+    num_p     double       not null comment '工作量权重',
+    culture   double       not null comment '企业文化',
+    culture_p double       not null comment '企业文化权重',
+    ad        double       not null comment '学习提升',
+    ad_p      double       not null comment '学习提升权重',
+    extra     double       not null comment '额外分',
+    depart    varchar(255) not null comment '部门',
+    month     int          not null
+)
+    comment '员工表';
+
+
+
+create table user
+(
+    id          int unsigned auto_increment comment 'ID'
+        primary key,
+    username    varchar(20) not null comment '用户名',
+    password    varchar(32) null comment '密码',
+    create_time datetime    not null comment '创建时间',
+    update_time datetime    not null comment '修改时间',
+    constraint username
+        unique (username)
+)
+    comment '用户表';
