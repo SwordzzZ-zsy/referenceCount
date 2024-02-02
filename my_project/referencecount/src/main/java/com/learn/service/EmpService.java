@@ -12,8 +12,9 @@ public interface EmpService extends IService<Emp> {
     List<Grade> sort(List<Grade> empList);
 
 
-    List<Grade> deptlist(List<Grade> empList);
+    List<Grade> deptlist(List<Grade> empList,String month);
 
 
-    List<Grade> NameList(String name);
+    List<Grade> NameList(String name,String month);
+
 }

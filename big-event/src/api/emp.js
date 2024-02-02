@@ -16,11 +16,16 @@ export const sortAchievementService=()=>{
 }
 
 //岗位成绩查询
-export const deparmentAchievementService=()=>{
-   return request.get('/show/dept')
+export const deparmentAchievementService=(params)=>{
+   return request.get('/show/dept',{params:params})
 }
 
 //文章列表查询
 export const employeeListService=(params)=>{
     return request.get('/show/search',{params:params})
  }
+
+ //上传excel文件并解析到数据库
+export const uploadFileService=(file)=>{
+    return request.post('/upload',file)
+}

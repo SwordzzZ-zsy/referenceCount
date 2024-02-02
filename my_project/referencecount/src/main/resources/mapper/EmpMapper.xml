@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis的DTD约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.mapper.EmpMapper">
+    <select id="findById" resultType="com.learn.pojo.Emp">
+        select * from employee where id=#{id}
+    </select>
+
+    <select id="selectByNameAndMonth" resultType="java.lang.Integer">
+        select count(*) from employee where name=#{name} and month=#{month}
+    </select>
+
+    <insert id="addEmp" parameterType="com.learn.pojo.Emp">
+        insert into employee(name,depart,quality,quality_p,submit,submit_p,
+                             num,num_p,culture,culture_p,ad,ad_p,extra,month)
+        values(#{name},#{depart},#{quality},#{qualityP},#{submit},#{submitP},
+               #{num},#{numP},#{culture},#{cultureP},#{ad},#{adP},#{extra},#{month})
+    </insert>
+
+    <update id="updateEmpByNameAndMonth" parameterType="com.learn.pojo.Emp">
+        update employee set depart=#{depart},quality=#{quality},quality_p=#{qualityP},submit=#{submit},
+                            submit_p=#{submitP},num=#{num},num_p=#{numP},culture=#{culture},culture_p=#{cultureP},
+                            ad=#{ad},ad_p=#{adP},extra=#{extra} where name=#{name} and month=#{month}
+    </update>
+
+    <select id="selectNumOfMonths" resultType="java.lang.Integer">
+        select count(distinct month) as count from employee
+    </select>
+
+    <select id="selectMonths" resultType="java.lang.String">
+        SELECT distinct month from employee
+    </select>
+
+    <select id="findByMonth" resultType="com.learn.pojo.Emp">
+        SELECT *FROM employee WHERE month = #{month}
+    </select>
+
+</mapper>

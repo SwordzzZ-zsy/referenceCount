@@ -1,48 +1,42 @@
-package com.learn;
+package com.learn.service.impl;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.PageReadListener;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learn.mapper.EmpMapper;
 import com.learn.pojo.Emp;
-import com.learn.pojo.Grade;
-import com.learn.service.EmpService;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import com.learn.service.UploadService;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-@SpringBootTest
-class ReferencecountApplicationTests {
-    @Autowired
-    private EmpService empService;
-
+@Service
+public class UploadServiceImpl extends ServiceImpl<EmpMapper, Emp> implements UploadService {
     @Autowired
     private EmpMapper empMapper;
 
-    //@Test
-    void contextLoads() {
-
-    }
-
-    @Test
-    void upload() throws IOException, InvalidFormatException {
+    @Override
+    public boolean batchImport(String fileName, MultipartFile file) throws IOException {
         boolean notNull = false;
         List<Emp> empList = new ArrayList<Emp>();
-        String fileName="C:\\Users\\24371\\Desktop\\my_project\\referencecount\\src\\main\\resources\\绩效.xlsx";
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            return;
+            return notNull;
         }
-        FileInputStream input=new FileInputStream(fileName);
-        Workbook workbook= WorkbookFactory.create(input);
+        InputStream is=file.getInputStream();
+        Workbook workbook= new XSSFWorkbook(is);
         Sheet sheet= workbook.getSheetAt(0);
+        if(sheet!=null)
+            notNull=true;
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            //创建对象存储
             //当前行
             Row row = sheet.getRow(i);
             //统计表格数据存入集合
@@ -61,14 +55,24 @@ class ReferencecountApplicationTests {
             double extra=0;
             if(row.getCell(12)!=null)
                 extra=row.getCell(12).getNumericCellValue();
-            int month=(int)row.getCell(13).getNumericCellValue();
+            String month=row.getCell(13).getStringCellValue();
 
             empList.add(new Emp(i,name,depart,quality,qualityP,submit,submitP,
                     num,numP,culture,cultureP,ad,adP,extra,month));
         }
-        for (Emp e : empList) {
-            System.out.println(e);
-        }
-    }
 
+        for (Emp e : empList) {
+            String name=e.getName();
+            String month=e.getMonth();
+            int cnt=empMapper.selectByNameAndMonth(name,month);
+            if(cnt==0){
+                empMapper.addEmp(e);
+            }
+            else {
+                empMapper.updateEmpByNameAndMonth(e);
+                System.out.println(cnt);
+            }
+        }
+        return notNull;
+    }
 }

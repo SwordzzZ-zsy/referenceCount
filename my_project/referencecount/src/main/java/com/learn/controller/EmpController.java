@@ -32,16 +32,17 @@ public class EmpController {
     }
 
     @GetMapping("/dept")
-    public Result listByFronts()  {
+    public Result listByFronts(@RequestParam(required = false) String month)  {
         //使用service查询员工
         List<Grade> empList = empService.getAverage();
-        List<Grade> deptList=empService.deptlist(empList);
+        List<Grade> deptList=empService.deptlist(empList,month);
         return Result.success(deptList);
     }
 
     @GetMapping("/search")
-    public Result searchByName(@RequestParam(required = false) String name){
-        List<Grade> nameList= empService.NameList(name);
+    public Result searchByNameAndMonth(@RequestParam(required = false) String name,@RequestParam(required = false) String month){
+        List<Grade> nameList= empService.NameList(name,month);
         return Result.success(nameList);
     }
+
 }

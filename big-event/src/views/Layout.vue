@@ -42,6 +42,12 @@ getUserInfo();
                     </el-icon>
                     <span>岗位成绩</span>
                 </el-menu-item>
+                <el-menu-item index="/upload">
+                        <el-icon>
+                            <User />
+                        </el-icon>
+                        <span>上传文件</span>
+                    </el-menu-item>
             </el-menu>
         </el-aside>
         <!-- 右侧主区域 -->
@@ -58,7 +64,7 @@ getUserInfo();
                 <router-view></router-view>
             </el-main>
             <!-- 底部区域 -->
-            <el-footer>九月绩效</el-footer>
+            <el-footer>绩效</el-footer>
         </el-container>
     </el-container>
 </template>

@@ -5,13 +5,15 @@ import LoginVue from '@/views/Login.vue';
 import LayoutVue from '@/views/Layout.vue';
 import DepartmentVue from "@/views/company/Department.vue";
 import EmployeeVue from "@/views/company/Employee.vue";
+import UploadFileVue from "@/views/company/UploadFile.vue";
 
 //定义路由关系
 const routes=[
     {path:'/login',component:LoginVue},
     {path:'/',component:LayoutVue,redirect:'/show/emp',children:[
         {path:'/show/emp',component:EmployeeVue},
-        {path:'/show/dept',component:DepartmentVue}
+        {path:'/show/dept',component:DepartmentVue},
+        {path:'/upload',component:UploadFileVue}
     ]}
 ]
 

@@ -7,7 +7,7 @@
 <select id="findByUserName" resultType="com.learn.pojo.User" parameterType="String">
     select * from user where username=#{username}
 </select>
-<insert id="add">
+<insert id="add" >
     insert into user(username, password, create_time, update_time) values(#{username},#{password},now(),now())
 </insert>
 </mapper>

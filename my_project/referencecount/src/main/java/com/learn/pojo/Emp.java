@@ -9,13 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "employee")
 public class Emp {
-    @TableId(value = "empId",type =IdType.AUTO)
-    private int empId;
+    private int id;
     @TableField(value = "name")
     private String name;
     @TableField(value = "depart")
@@ -43,5 +44,5 @@ public class Emp {
     @TableField(value = "extra")
     private double extra;
     @TableField(value = "month")
-    private int month;
+    private String month;
 }
