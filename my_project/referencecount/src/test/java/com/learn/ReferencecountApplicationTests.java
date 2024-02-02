@@ -45,7 +45,7 @@ class ReferencecountApplicationTests {
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
             //当前行
             Row row = sheet.getRow(i);
-            //统计表格数据存入集合
+            //统计表格数据存入集
             String name=row.getCell(0).getStringCellValue();
             String depart=row.getCell(1).getStringCellValue();
             double quality=row.getCell(2).getNumericCellValue();
